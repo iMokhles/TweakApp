@@ -38,7 +38,7 @@ Credits
 
 [Alexzielenski / optool](https://github.com/alexzielenski/optool)
 
-[iMokhles / AppSignerCMD](https://github.com/alexzielenski/optool)
+[iMokhles / AppSignerCMD](https://github.com/iMokhles/AppSignerCMD)
 
 [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice)
 
