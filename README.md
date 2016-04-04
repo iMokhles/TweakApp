@@ -3,6 +3,16 @@
 
 tweaking/signing/sideloading apps within the same Application 
 
+NOTE
+------
+
+this app isn't for piracy usage so use it legally please.
+
+this app made for developer who need modify runtime codes ( to add some new cool features ) not for steal or break softwares
+
+we are here to add cool features aren't existe by default in the apps
+
+
 <p align="center">
   <img width="640" src="Screenshot.png"/>
 </p>
