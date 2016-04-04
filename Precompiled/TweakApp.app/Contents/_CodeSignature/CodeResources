@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/AppIcon.icns</key>
 		<data>
-		w/5njvLEty5lIOZT6Yfe0UIOMa0=
+		vS8jr1rwUo/0xruihVRlCoiMWbU=
 		</data>
 		<key>Resources/AppSignerCMD</key>
 		<data>
@@ -16,7 +16,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3oJwm6pTJccqW67wrSBLtHE5Iew=
+			1yA6KIQz9ZFVpDWv5f/tp0HMoI4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -25,7 +25,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NXXNWgQI9G8GGHhlT6Y7ET/TDDg=
+			/NxiVWIpaPLN2yK3AYPqgwXvYEM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -34,7 +34,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TA/2n2E6uQ68GSvg1cxu1EtTSZs=
+			Lw4JyaeKyhjo9Gg8grI4cDtZ3UE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -43,7 +43,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+9QkBbn70F1yUDxd+R9MKtmh3Ak=
+			0ARVbCMnGZhpT/gk8yLbxWgiQiU=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -99,11 +99,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			w/5njvLEty5lIOZT6Yfe0UIOMa0=
+			vS8jr1rwUo/0xruihVRlCoiMWbU=
 			</data>
 			<key>hash2</key>
 			<data>
-			k748PuiZrK7mIs3rEAAE84QfcvjqQayq1ufyDDPloZE=
+			aIFY8cOuYeitvK16h9xa7t1HKtkq9qBmdVZlZsbBGqo=
 			</data>
 		</dict>
 		<key>Resources/AppSignerCMD</key>
@@ -121,11 +121,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			3oJwm6pTJccqW67wrSBLtHE5Iew=
+			1yA6KIQz9ZFVpDWv5f/tp0HMoI4=
 			</data>
 			<key>hash2</key>
 			<data>
-			dK5lzJehrDKIvNG8KkZvGNr+ErhxQmK32qX+9ghaRYw=
+			DuNRZOdJKUQgltSvRktPPBrhmCRgiJkp5TzqQMDIrgI=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -134,11 +134,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NXXNWgQI9G8GGHhlT6Y7ET/TDDg=
+			/NxiVWIpaPLN2yK3AYPqgwXvYEM=
 			</data>
 			<key>hash2</key>
 			<data>
-			XKx7jTMuTOcbRTrAmTu2er8F1cb8hz1pBK7Zn+ovugA=
+			KnvCCdfzRbZWt7zHt2onDSd0QRhwfrMwI3fdP6yzJZ0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -147,11 +147,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TA/2n2E6uQ68GSvg1cxu1EtTSZs=
+			Lw4JyaeKyhjo9Gg8grI4cDtZ3UE=
 			</data>
 			<key>hash2</key>
 			<data>
-			lyjiPAoUgN/IRScfRD2KZ1q3DLzvv1fC1299MStzKKE=
+			hY9GxKkLdi6beMSQWZeo4dRvDwjUWLVCAzG5CquI59o=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -160,11 +160,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+9QkBbn70F1yUDxd+R9MKtmh3Ak=
+			0ARVbCMnGZhpT/gk8yLbxWgiQiU=
 			</data>
 			<key>hash2</key>
 			<data>
-			hryFC+EYmbqJsJQco9GkcueDzMphH0YUC0lDdWfYLMU=
+			sfrtxd6d1tLhccN1zuKZun7XUIn8Ig4tCKQQBbvq038=
 			</data>
 			<key>optional</key>
 			<true/>

@@ -22,4 +22,5 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
 + (NSImage *)roundCornersImage:(NSImage *)image CornerRadius:(NSInteger)radius;
 + (NSArray *)getCertifications;
 + (BOOL)copyDylibFile:(NSString *)dylibFile toPath:(NSString *)path;
++ (BOOL)ApplyCommandWithRoot:(NSString *)commandString;
 @end

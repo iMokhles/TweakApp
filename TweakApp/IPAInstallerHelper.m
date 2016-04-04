@@ -141,4 +141,11 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
     return ([appleScript executeAndReturnError:nil] != nil);
 }
 
++ (BOOL)ApplyCommandWithRoot:(NSString *)commandString {
+    NSString *command = [NSString stringWithFormat:@"%@", commandString];
+    NSString *script =  [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", command];
+    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+    return ([appleScript executeAndReturnError:nil] != nil);
+}
+
 @end

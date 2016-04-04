@@ -215,6 +215,16 @@ static NSImage *greenImage = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateProgressLabel:output];
             });
+            
+            if ([output containsString:@"17"]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [_progressBarLabel setStringValue:@"Signed"];
+                    _uniButton.title = @"Extract";
+                    _ipaTextField.stringValue = outPutPath;
+                    [self updateProgressLabel:@""];
+                    [self updateProgressLabel:@"Click extract now"];
+                });
+            }
         } andErrorBlock:^(NSData *stdErrData) {
             NSString* output = [[NSString alloc] initWithData:stdErrData encoding:NSUTF8StringEncoding];
             NSLog(@"ERR: %@", output);
@@ -225,17 +235,6 @@ static NSImage *greenImage = nil;
             NSLog(@"Task has started running.");
         } onExit:^{
             NSLog(@"Task has now quit.");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_progressBarLabel setStringValue:@"Signed"];
-                    _uniButton.title = @"Extract";
-                    _ipaTextField.stringValue = outPutPath;
-                    [self updateProgressLabel:@""];
-                    [self updateProgressLabel:@"Click extract now"];
-                });
-            });
             
         }];
     }
