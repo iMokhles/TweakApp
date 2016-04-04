@@ -27,7 +27,9 @@ Credits
 ------
 
 [Alexzielenski / optool](https://github.com/alexzielenski/optool)
+
 [iMokhles / AppSignerCMD](https://github.com/alexzielenski/optool)
+
 [libimobiledevice](https://github.com/libimobiledevice/libimobiledevice)
 
 #MIT License
