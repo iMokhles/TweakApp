@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		43ADB0901CB22E2F00435039 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB08F1CB22E2F00435039 /* AppDelegate.m */; };
+		43ADB0931CB22E2F00435039 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0921CB22E2F00435039 /* main.m */; };
+		43ADB0961CB22E2F00435039 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0951CB22E2F00435039 /* ViewController.m */; };
+		43ADB0981CB22E2F00435039 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0971CB22E2F00435039 /* Assets.xcassets */; };
+		43ADB09B1CB22E2F00435039 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0991CB22E2F00435039 /* Main.storyboard */; };
+		43ADB0E01CB22EB200435039 /* DJActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0A41CB22EB200435039 /* DJActivityIndicator.m */; };
+		43ADB0E11CB22EB200435039 /* DJBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0A61CB22EB200435039 /* DJBezierPath.m */; };
+		43ADB0E21CB22EB200435039 /* DJProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0A81CB22EB200435039 /* DJProgressHUD.m */; };
+		43ADB0E31CB22EB200435039 /* DJProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0AA1CB22EB200435039 /* DJProgressIndicator.m */; };
+		43ADB0E41CB22EB200435039 /* DragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0AC1CB22EB200435039 /* DragView.m */; };
+		43ADB0E51CB22EB200435039 /* GCDTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0AE1CB22EB200435039 /* GCDTask.m */; };
+		43ADB0E61CB22EB200435039 /* greenImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0AF1CB22EB200435039 /* greenImage.png */; };
+		43ADB0E71CB22EB200435039 /* ideviceinstaller in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0B01CB22EB200435039 /* ideviceinstaller */; };
+		43ADB0E81CB22EB200435039 /* IPAInstallerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0B21CB22EB200435039 /* IPAInstallerHelper.m */; };
+		43ADB0E91CB22EB200435039 /* libMobileDeviceAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ADB0B31CB22EB200435039 /* libMobileDeviceAccess.a */; };
+		43ADB0EA1CB22EB200435039 /* LibraryChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0B51CB22EB200435039 /* LibraryChecker.m */; };
+		43ADB0EB1CB22EB200435039 /* MobileDevice in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ADB0B61CB22EB200435039 /* MobileDevice */; };
+		43ADB0EC1CB22EB200435039 /* redImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0B91CB22EB200435039 /* redImage.png */; };
+		43ADB0ED1CB22EB200435039 /* aescrypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0BE1CB22EB200435039 /* aescrypt.c */; };
+		43ADB0EE1CB22EB200435039 /* aeskey.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0BF1CB22EB200435039 /* aeskey.c */; };
+		43ADB0EF1CB22EB200435039 /* aestab.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0C11CB22EB200435039 /* aestab.c */; };
+		43ADB0F01CB22EB200435039 /* entropy.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0C51CB22EB200435039 /* entropy.c */; };
+		43ADB0F11CB22EB200435039 /* fileenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0C71CB22EB200435039 /* fileenc.c */; };
+		43ADB0F21CB22EB200435039 /* hmac.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0C91CB22EB200435039 /* hmac.c */; };
+		43ADB0F31CB22EB200435039 /* prng.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0CB1CB22EB200435039 /* prng.c */; };
+		43ADB0F41CB22EB200435039 /* pwd2key.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0CD1CB22EB200435039 /* pwd2key.c */; };
+		43ADB0F51CB22EB200435039 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0CF1CB22EB200435039 /* sha1.c */; };
+		43ADB0F61CB22EB200435039 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0D21CB22EB200435039 /* Info.plist */; };
+		43ADB0F71CB22EB200435039 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0D51CB22EB200435039 /* ioapi.c */; };
+		43ADB0F81CB22EB200435039 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0D71CB22EB200435039 /* mztools.c */; };
+		43ADB0F91CB22EB200435039 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0D91CB22EB200435039 /* unzip.c */; };
+		43ADB0FA1CB22EB200435039 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0DB1CB22EB200435039 /* zip.c */; };
+		43ADB0FB1CB22EB200435039 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0DE1CB22EB200435039 /* SSZipArchive.m */; };
+		43ADB0FE1CB22EDD00435039 /* Libs in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0FD1CB22EDD00435039 /* Libs */; };
+		43ADB1001CB232D700435039 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ADB0FF1CB232D700435039 /* libz.tbd */; };
+		43ADB1021CB2347C00435039 /* optool in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1011CB2347C00435039 /* optool */; };
+		43ADB1041CB241B800435039 /* AppSignerCMD in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1031CB241B800435039 /* AppSignerCMD */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		43ADB08B1CB22E2F00435039 /* TweakApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TweakApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43ADB08E1CB22E2F00435039 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		43ADB08F1CB22E2F00435039 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		43ADB0921CB22E2F00435039 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		43ADB0941CB22E2F00435039 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		43ADB0951CB22E2F00435039 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		43ADB0971CB22E2F00435039 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		43ADB09A1CB22E2F00435039 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		43ADB09C1CB22E2F00435039 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43ADB0A31CB22EB200435039 /* DJActivityIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJActivityIndicator.h; sourceTree = "<group>"; };
+		43ADB0A41CB22EB200435039 /* DJActivityIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJActivityIndicator.m; sourceTree = "<group>"; };
+		43ADB0A51CB22EB200435039 /* DJBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJBezierPath.h; sourceTree = "<group>"; };
+		43ADB0A61CB22EB200435039 /* DJBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJBezierPath.m; sourceTree = "<group>"; };
+		43ADB0A71CB22EB200435039 /* DJProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressHUD.h; sourceTree = "<group>"; };
+		43ADB0A81CB22EB200435039 /* DJProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressHUD.m; sourceTree = "<group>"; };
+		43ADB0A91CB22EB200435039 /* DJProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJProgressIndicator.h; sourceTree = "<group>"; };
+		43ADB0AA1CB22EB200435039 /* DJProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJProgressIndicator.m; sourceTree = "<group>"; };
+		43ADB0AB1CB22EB200435039 /* DragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragView.h; sourceTree = "<group>"; };
+		43ADB0AC1CB22EB200435039 /* DragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragView.m; sourceTree = "<group>"; };
+		43ADB0AD1CB22EB200435039 /* GCDTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTask.h; sourceTree = "<group>"; };
+		43ADB0AE1CB22EB200435039 /* GCDTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTask.m; sourceTree = "<group>"; };
+		43ADB0AF1CB22EB200435039 /* greenImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenImage.png; sourceTree = "<group>"; };
+		43ADB0B01CB22EB200435039 /* ideviceinstaller */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ideviceinstaller; sourceTree = "<group>"; };
+		43ADB0B11CB22EB200435039 /* IPAInstallerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAInstallerHelper.h; sourceTree = "<group>"; };
+		43ADB0B21CB22EB200435039 /* IPAInstallerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAInstallerHelper.m; sourceTree = "<group>"; };
+		43ADB0B31CB22EB200435039 /* libMobileDeviceAccess.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobileDeviceAccess.a; sourceTree = "<group>"; };
+		43ADB0B41CB22EB200435039 /* LibraryChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryChecker.h; sourceTree = "<group>"; };
+		43ADB0B51CB22EB200435039 /* LibraryChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryChecker.m; sourceTree = "<group>"; };
+		43ADB0B61CB22EB200435039 /* MobileDevice */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = MobileDevice; sourceTree = "<group>"; };
+		43ADB0B71CB22EB200435039 /* MobileDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileDevice.h; sourceTree = "<group>"; };
+		43ADB0B81CB22EB200435039 /* MobileDeviceAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileDeviceAccess.h; sourceTree = "<group>"; };
+		43ADB0B91CB22EB200435039 /* redImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redImage.png; sourceTree = "<group>"; };
+		43ADB0BC1CB22EB200435039 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		43ADB0BD1CB22EB200435039 /* aes_via_ace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes_via_ace.h; sourceTree = "<group>"; };
+		43ADB0BE1CB22EB200435039 /* aescrypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aescrypt.c; sourceTree = "<group>"; };
+		43ADB0BF1CB22EB200435039 /* aeskey.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aeskey.c; sourceTree = "<group>"; };
+		43ADB0C01CB22EB200435039 /* aesopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aesopt.h; sourceTree = "<group>"; };
+		43ADB0C11CB22EB200435039 /* aestab.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aestab.c; sourceTree = "<group>"; };
+		43ADB0C21CB22EB200435039 /* aestab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aestab.h; sourceTree = "<group>"; };
+		43ADB0C31CB22EB200435039 /* brg_endian.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_endian.h; sourceTree = "<group>"; };
+		43ADB0C41CB22EB200435039 /* brg_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brg_types.h; sourceTree = "<group>"; };
+		43ADB0C51CB22EB200435039 /* entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = entropy.c; sourceTree = "<group>"; };
+		43ADB0C61CB22EB200435039 /* entropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entropy.h; sourceTree = "<group>"; };
+		43ADB0C71CB22EB200435039 /* fileenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fileenc.c; sourceTree = "<group>"; };
+		43ADB0C81CB22EB200435039 /* fileenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileenc.h; sourceTree = "<group>"; };
+		43ADB0C91CB22EB200435039 /* hmac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hmac.c; sourceTree = "<group>"; };
+		43ADB0CA1CB22EB200435039 /* hmac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hmac.h; sourceTree = "<group>"; };
+		43ADB0CB1CB22EB200435039 /* prng.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prng.c; sourceTree = "<group>"; };
+		43ADB0CC1CB22EB200435039 /* prng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prng.h; sourceTree = "<group>"; };
+		43ADB0CD1CB22EB200435039 /* pwd2key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pwd2key.c; sourceTree = "<group>"; };
+		43ADB0CE1CB22EB200435039 /* pwd2key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pwd2key.h; sourceTree = "<group>"; };
+		43ADB0CF1CB22EB200435039 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha1.c; sourceTree = "<group>"; };
+		43ADB0D01CB22EB200435039 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha1.h; sourceTree = "<group>"; };
+		43ADB0D11CB22EB200435039 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		43ADB0D21CB22EB200435039 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43ADB0D41CB22EB200435039 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		43ADB0D51CB22EB200435039 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		43ADB0D61CB22EB200435039 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		43ADB0D71CB22EB200435039 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		43ADB0D81CB22EB200435039 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		43ADB0D91CB22EB200435039 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		43ADB0DA1CB22EB200435039 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		43ADB0DB1CB22EB200435039 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		43ADB0DC1CB22EB200435039 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		43ADB0DD1CB22EB200435039 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
+		43ADB0DE1CB22EB200435039 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
+		43ADB0DF1CB22EB200435039 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		43ADB0FD1CB22EDD00435039 /* Libs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Libs; sourceTree = "<group>"; };
+		43ADB0FF1CB232D700435039 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		43ADB1011CB2347C00435039 /* optool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optool; sourceTree = "<group>"; };
+		43ADB1031CB241B800435039 /* AppSignerCMD */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = AppSignerCMD; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		43ADB0881CB22E2F00435039 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43ADB1001CB232D700435039 /* libz.tbd in Frameworks */,
+				43ADB0EB1CB22EB200435039 /* MobileDevice in Frameworks */,
+				43ADB0E91CB22EB200435039 /* libMobileDeviceAccess.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		43ADB0821CB22E2F00435039 = {
+			isa = PBXGroup;
+			children = (
+				43ADB0FF1CB232D700435039 /* libz.tbd */,
+				43ADB08D1CB22E2F00435039 /* TweakApp */,
+				43ADB08C1CB22E2F00435039 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		43ADB08C1CB22E2F00435039 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB08B1CB22E2F00435039 /* TweakApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		43ADB08D1CB22E2F00435039 /* TweakApp */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0FC1CB22EC100435039 /* IPAInstaller */,
+				43ADB08E1CB22E2F00435039 /* AppDelegate.h */,
+				43ADB08F1CB22E2F00435039 /* AppDelegate.m */,
+				43ADB0941CB22E2F00435039 /* ViewController.h */,
+				43ADB0951CB22E2F00435039 /* ViewController.m */,
+				43ADB0971CB22E2F00435039 /* Assets.xcassets */,
+				43ADB0991CB22E2F00435039 /* Main.storyboard */,
+				43ADB09C1CB22E2F00435039 /* Info.plist */,
+				43ADB0911CB22E2F00435039 /* Supporting Files */,
+			);
+			path = TweakApp;
+			sourceTree = "<group>";
+		};
+		43ADB0911CB22E2F00435039 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0921CB22E2F00435039 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		43ADB0A21CB22EB200435039 /* DJProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0A31CB22EB200435039 /* DJActivityIndicator.h */,
+				43ADB0A41CB22EB200435039 /* DJActivityIndicator.m */,
+				43ADB0A51CB22EB200435039 /* DJBezierPath.h */,
+				43ADB0A61CB22EB200435039 /* DJBezierPath.m */,
+				43ADB0A71CB22EB200435039 /* DJProgressHUD.h */,
+				43ADB0A81CB22EB200435039 /* DJProgressHUD.m */,
+				43ADB0A91CB22EB200435039 /* DJProgressIndicator.h */,
+				43ADB0AA1CB22EB200435039 /* DJProgressIndicator.m */,
+			);
+			path = DJProgressHUD;
+			sourceTree = "<group>";
+		};
+		43ADB0BA1CB22EB200435039 /* SSZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0BB1CB22EB200435039 /* aes */,
+				43ADB0D11CB22EB200435039 /* Common.h */,
+				43ADB0D21CB22EB200435039 /* Info.plist */,
+				43ADB0D31CB22EB200435039 /* minizip */,
+				43ADB0DD1CB22EB200435039 /* SSZipArchive.h */,
+				43ADB0DE1CB22EB200435039 /* SSZipArchive.m */,
+				43ADB0DF1CB22EB200435039 /* ZipArchive.h */,
+			);
+			path = SSZipArchive;
+			sourceTree = "<group>";
+		};
+		43ADB0BB1CB22EB200435039 /* aes */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0BC1CB22EB200435039 /* aes.h */,
+				43ADB0BD1CB22EB200435039 /* aes_via_ace.h */,
+				43ADB0BE1CB22EB200435039 /* aescrypt.c */,
+				43ADB0BF1CB22EB200435039 /* aeskey.c */,
+				43ADB0C01CB22EB200435039 /* aesopt.h */,
+				43ADB0C11CB22EB200435039 /* aestab.c */,
+				43ADB0C21CB22EB200435039 /* aestab.h */,
+				43ADB0C31CB22EB200435039 /* brg_endian.h */,
+				43ADB0C41CB22EB200435039 /* brg_types.h */,
+				43ADB0C51CB22EB200435039 /* entropy.c */,
+				43ADB0C61CB22EB200435039 /* entropy.h */,
+				43ADB0C71CB22EB200435039 /* fileenc.c */,
+				43ADB0C81CB22EB200435039 /* fileenc.h */,
+				43ADB0C91CB22EB200435039 /* hmac.c */,
+				43ADB0CA1CB22EB200435039 /* hmac.h */,
+				43ADB0CB1CB22EB200435039 /* prng.c */,
+				43ADB0CC1CB22EB200435039 /* prng.h */,
+				43ADB0CD1CB22EB200435039 /* pwd2key.c */,
+				43ADB0CE1CB22EB200435039 /* pwd2key.h */,
+				43ADB0CF1CB22EB200435039 /* sha1.c */,
+				43ADB0D01CB22EB200435039 /* sha1.h */,
+			);
+			path = aes;
+			sourceTree = "<group>";
+		};
+		43ADB0D31CB22EB200435039 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB0D41CB22EB200435039 /* crypt.h */,
+				43ADB0D51CB22EB200435039 /* ioapi.c */,
+				43ADB0D61CB22EB200435039 /* ioapi.h */,
+				43ADB0D71CB22EB200435039 /* mztools.c */,
+				43ADB0D81CB22EB200435039 /* mztools.h */,
+				43ADB0D91CB22EB200435039 /* unzip.c */,
+				43ADB0DA1CB22EB200435039 /* unzip.h */,
+				43ADB0DB1CB22EB200435039 /* zip.c */,
+				43ADB0DC1CB22EB200435039 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
+		43ADB0FC1CB22EC100435039 /* IPAInstaller */ = {
+			isa = PBXGroup;
+			children = (
+				43ADB1031CB241B800435039 /* AppSignerCMD */,
+				43ADB1011CB2347C00435039 /* optool */,
+				43ADB0FD1CB22EDD00435039 /* Libs */,
+				43ADB0A21CB22EB200435039 /* DJProgressHUD */,
+				43ADB0AB1CB22EB200435039 /* DragView.h */,
+				43ADB0AC1CB22EB200435039 /* DragView.m */,
+				43ADB0AD1CB22EB200435039 /* GCDTask.h */,
+				43ADB0AE1CB22EB200435039 /* GCDTask.m */,
+				43ADB0AF1CB22EB200435039 /* greenImage.png */,
+				43ADB0B01CB22EB200435039 /* ideviceinstaller */,
+				43ADB0B11CB22EB200435039 /* IPAInstallerHelper.h */,
+				43ADB0B21CB22EB200435039 /* IPAInstallerHelper.m */,
+				43ADB0B31CB22EB200435039 /* libMobileDeviceAccess.a */,
+				43ADB0B41CB22EB200435039 /* LibraryChecker.h */,
+				43ADB0B51CB22EB200435039 /* LibraryChecker.m */,
+				43ADB0B61CB22EB200435039 /* MobileDevice */,
+				43ADB0B71CB22EB200435039 /* MobileDevice.h */,
+				43ADB0B81CB22EB200435039 /* MobileDeviceAccess.h */,
+				43ADB0B91CB22EB200435039 /* redImage.png */,
+				43ADB0BA1CB22EB200435039 /* SSZipArchive */,
+			);
+			name = IPAInstaller;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		43ADB08A1CB22E2F00435039 /* TweakApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 43ADB09F1CB22E2F00435039 /* Build configuration list for PBXNativeTarget "TweakApp" */;
+			buildPhases = (
+				43ADB0871CB22E2F00435039 /* Sources */,
+				43ADB0881CB22E2F00435039 /* Frameworks */,
+				43ADB0891CB22E2F00435039 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TweakApp;
+			productName = TweakApp;
+			productReference = 43ADB08B1CB22E2F00435039 /* TweakApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		43ADB0831CB22E2F00435039 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = iMokhles;
+				TargetAttributes = {
+					43ADB08A1CB22E2F00435039 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 43ADB0861CB22E2F00435039 /* Build configuration list for PBXProject "TweakApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 43ADB0821CB22E2F00435039;
+			productRefGroup = 43ADB08C1CB22E2F00435039 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				43ADB08A1CB22E2F00435039 /* TweakApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43ADB0891CB22E2F00435039 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43ADB1041CB241B800435039 /* AppSignerCMD in Resources */,
+				43ADB0981CB22E2F00435039 /* Assets.xcassets in Resources */,
+				43ADB0EC1CB22EB200435039 /* redImage.png in Resources */,
+				43ADB0FE1CB22EDD00435039 /* Libs in Resources */,
+				43ADB1021CB2347C00435039 /* optool in Resources */,
+				43ADB0F61CB22EB200435039 /* Info.plist in Resources */,
+				43ADB0E61CB22EB200435039 /* greenImage.png in Resources */,
+				43ADB09B1CB22E2F00435039 /* Main.storyboard in Resources */,
+				43ADB0E71CB22EB200435039 /* ideviceinstaller in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		43ADB0871CB22E2F00435039 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43ADB0F51CB22EB200435039 /* sha1.c in Sources */,
+				43ADB0FB1CB22EB200435039 /* SSZipArchive.m in Sources */,
+				43ADB0F31CB22EB200435039 /* prng.c in Sources */,
+				43ADB0F11CB22EB200435039 /* fileenc.c in Sources */,
+				43ADB0EA1CB22EB200435039 /* LibraryChecker.m in Sources */,
+				43ADB0E11CB22EB200435039 /* DJBezierPath.m in Sources */,
+				43ADB0E31CB22EB200435039 /* DJProgressIndicator.m in Sources */,
+				43ADB0F71CB22EB200435039 /* ioapi.c in Sources */,
+				43ADB0E01CB22EB200435039 /* DJActivityIndicator.m in Sources */,
+				43ADB0961CB22E2F00435039 /* ViewController.m in Sources */,
+				43ADB0FA1CB22EB200435039 /* zip.c in Sources */,
+				43ADB0931CB22E2F00435039 /* main.m in Sources */,
+				43ADB0E21CB22EB200435039 /* DJProgressHUD.m in Sources */,
+				43ADB0E51CB22EB200435039 /* GCDTask.m in Sources */,
+				43ADB0F01CB22EB200435039 /* entropy.c in Sources */,
+				43ADB0E81CB22EB200435039 /* IPAInstallerHelper.m in Sources */,
+				43ADB0EF1CB22EB200435039 /* aestab.c in Sources */,
+				43ADB0E41CB22EB200435039 /* DragView.m in Sources */,
+				43ADB0F81CB22EB200435039 /* mztools.c in Sources */,
+				43ADB0ED1CB22EB200435039 /* aescrypt.c in Sources */,
+				43ADB0F41CB22EB200435039 /* pwd2key.c in Sources */,
+				43ADB0EE1CB22EB200435039 /* aeskey.c in Sources */,
+				43ADB0F21CB22EB200435039 /* hmac.c in Sources */,
+				43ADB0F91CB22EB200435039 /* unzip.c in Sources */,
+				43ADB0901CB22E2F00435039 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		43ADB0991CB22E2F00435039 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				43ADB09A1CB22E2F00435039 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		43ADB09D1CB22E2F00435039 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		43ADB09E1CB22E2F00435039 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		43ADB0A01CB22E2F00435039 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TweakApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TweakApp",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imokhles.TweakApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		43ADB0A11CB22E2F00435039 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TweakApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TweakApp",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.imokhles.TweakApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		43ADB0861CB22E2F00435039 /* Build configuration list for PBXProject "TweakApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43ADB09D1CB22E2F00435039 /* Debug */,
+				43ADB09E1CB22E2F00435039 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		43ADB09F1CB22E2F00435039 /* Build configuration list for PBXNativeTarget "TweakApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				43ADB0A01CB22E2F00435039 /* Debug */,
+				43ADB0A11CB22E2F00435039 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 43ADB0831CB22E2F00435039 /* Project object */;
+}
