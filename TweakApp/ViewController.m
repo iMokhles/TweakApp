@@ -281,7 +281,7 @@ static NSString *outPutPath;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateProgressLabel:@"Task successfully launched"];
                 [self updateProgressLabel:@""];
-                [self updateProgressLabel:@"Waiting till the sign process finishn"];
+                [self updateProgressLabel:@"Waiting till the sign process finish"];
             });
         }
         
