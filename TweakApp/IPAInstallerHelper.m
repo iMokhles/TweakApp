@@ -65,7 +65,7 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
 }
 
 + (NSString *)ipainstallerSubPath {
-    NSString *appTempPath = [[self tempPath] stringByAppendingPathComponent:@"ipainstaller"];
+    NSString *appTempPath = [[self tempPath] stringByAppendingPathComponent:@"TweakApp"];
     [self ensurePathAt:appTempPath];
     return appTempPath;
 }
