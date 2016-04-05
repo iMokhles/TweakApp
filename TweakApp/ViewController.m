@@ -12,6 +12,7 @@
 #import "IPAInstallerHelper.h"
 #import "SSZipArchive.h"
 #import "GCDTask.h"
+#import "STPrivilegedTask.h"
 
 @interface ViewController () <MobileDeviceAccessListener, SSZipArchiveDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     NSArray *certsArray;
@@ -122,62 +123,48 @@ static NSImage *greenImage = nil;
         for (NSString *appFile in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil]) {
             
             if ([appFile.lowercaseString containsString:@"app"]) {
-                GCDTask* pingTask = [[GCDTask alloc] init];
-                NSLog(@"%@", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]);
-                [pingTask setArguments:@[@"-i", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]]];
-                [pingTask setLaunchPath:[[NSBundle mainBundle] pathForResource:@"ideviceinstaller" ofType:nil]];
                 
-                [pingTask launchWithOutputBlock:^(NSData *stdOutData) {
-                    NSString* output = [[NSString alloc] initWithData:stdOutData encoding:NSUTF8StringEncoding];
-                    NSLog(@"OUT: %@", output);
+                NSLog(@"Installing: %@", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self updateProgressLabel:[NSString stringWithFormat:@"Installing: %@", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]]];
+                });
+                STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+                [privilegedTask setLaunchPath:[[NSBundle mainBundle] pathForResource:@"ideviceinstaller" ofType:nil]];
+                [privilegedTask setArguments:@[@"-i", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]]];
+                
+                // Setting working directory is optional, defaults to /
+                NSArray * paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
+                NSString * desktopPath = [paths objectAtIndex:0];
+                [privilegedTask setCurrentDirectoryPath:desktopPath];
+                
+                // Launch it, user is prompted for password
+                OSStatus err = [privilegedTask launch];
+                if (err != errAuthorizationSuccess) {
+                    if (err == errAuthorizationCanceled) {
+                        NSLog(@"User cancelled");
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self updateProgressLabel:@"User cancelled"];
+                        });
+                    } else {
+                        NSLog(@"Something went wrong");
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self updateProgressLabel:@"Something went wrong"];
+                        });
+                    }
+                } else {
+                    NSLog(@"Task successfully launched");
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if ([output containsString:@"5"]) {
-                            [self updateProgress:5.0f];
-                        }
-                        if ([output containsString:@"15"]) {
-                            [self updateProgress:15.0f];
-                        }
-                        if ([output containsString:@"20"]) {
-                            [self updateProgress:20.0f];
-                        }
-                        if ([output containsString:@"30"]) {
-                            [self updateProgress:30.0f];
-                        }
-                        if ([output containsString:@"40"]) {
-                            [self updateProgress:40.0f];
-                        }
-                        if ([output containsString:@"50"]) {
-                            [self updateProgress:50.0f];
-                        }
-                        if ([output containsString:@"60"]) {
-                            [self updateProgress:60.0f];
-                        }
-                        if ([output containsString:@"70"]) {
-                            [self updateProgress:70.0f];
-                        }
-                        if ([output containsString:@"80"]) {
-                            [self updateProgress:80.0f];
-                        }
-                        if ([output containsString:@"90"]) {
-                            [self updateProgress:90.0f];
-                        }
-                        if ([output containsString:@"Complete"]) {
-                            [self updateProgress:100.0f];
-                            [self resetAllContents];
-                        }
-                        [self updateProgressLabel:output];
+                        [self updateProgressLabel:@"Task successfully launched"];
                     });
-                } andErrorBlock:^(NSData *stdErrData) {
-                    NSString* output = [[NSString alloc] initWithData:stdErrData encoding:NSUTF8StringEncoding];
-                    NSLog(@"ERR: %@", output);
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self updateProgressLabel:output];
-                    });
-                } onLaunch:^{
-                    NSLog(@"Task has started running.");
-                } onExit:^{
-                    NSLog(@"Task has now quit.");
-                }];
+                }
+                
+                NSFileHandle *readHandle = [privilegedTask outputFileHandle];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getInstallOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
+                [readHandle readInBackgroundAndNotify];
+                
+                
+                
+
             }
         }
         
@@ -185,6 +172,60 @@ static NSImage *greenImage = nil;
     
 }
 
+- (void)getInstallOutputData:(NSNotification *)aNotification {
+    //get data from notification
+    NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    
+    //make sure there's actual data
+    if ([data length]) {
+        // do something with the data
+        NSString* output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"OUT: %@", output);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([output containsString:@"5"]) {
+                [self updateProgress:5.0f];
+            }
+            if ([output containsString:@"15"]) {
+                [self updateProgress:15.0f];
+            }
+            if ([output containsString:@"20"]) {
+                [self updateProgress:20.0f];
+            }
+            if ([output containsString:@"30"]) {
+                [self updateProgress:30.0f];
+            }
+            if ([output containsString:@"40"]) {
+                [self updateProgress:40.0f];
+            }
+            if ([output containsString:@"50"]) {
+                [self updateProgress:50.0f];
+            }
+            if ([output containsString:@"60"]) {
+                [self updateProgress:60.0f];
+            }
+            if ([output containsString:@"70"]) {
+                [self updateProgress:70.0f];
+            }
+            if ([output containsString:@"80"]) {
+                [self updateProgress:80.0f];
+            }
+            if ([output containsString:@"90"]) {
+                [self updateProgress:90.0f];
+            }
+            if ([output containsString:@"Complete"]) {
+                [self updateProgress:100.0f];
+                [self resetAllContents];
+            }
+            [self updateProgressLabel:output];
+        });
+        // go read more data in the background
+        [[aNotification object] readInBackgroundAndNotify];
+    } else {
+        // do something else
+    }
+}
+
+static NSString *outPutPath;
 - (void)signAppBeforeAnyProcess {
     if (_profileTextField.stringValue.length < 1) {
         [self updateProgressLabel:@""];
@@ -203,40 +244,75 @@ static NSImage *greenImage = nil;
         [self updateProgressLabel:@"You have to type same provisioning profile bundle ID"];
     } else {
         // start sign
-        NSString *outPutPath = [_ipaTextField.stringValue stringByDeletingLastPathComponent];
+        outPutPath = [_ipaTextField.stringValue stringByDeletingLastPathComponent];
         outPutPath = [outPutPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-signed.ipa", _ipaTextField.stringValue.lastPathComponent.stringByDeletingPathExtension]];
         NSString *signerPath = [[NSBundle mainBundle] pathForResource:@"AppSignerCMD" ofType:nil];
-        GCDTask* pingTask = [[GCDTask alloc] init];
-        [pingTask setLaunchPath:signerPath];
-        [pingTask setArguments:@[@"-f", _ipaTextField.stringValue, @"-s", certificateName, @"-p", _profileTextField.stringValue, @"-i", _bundleIDTextField.stringValue, @"-n", _appNameTextField.stringValue, @"-o",outPutPath]];
-        [pingTask launchWithOutputBlock:^(NSData *stdOutData) {
-            NSString* output = [[NSString alloc] initWithData:stdOutData encoding:NSUTF8StringEncoding];
-            NSLog(@"OUT: %@", output);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:output];
-            });
-            
-            if ([output containsString:@"17"]) {
+        
+        NSArray *args = @[@"-f", _ipaTextField.stringValue, @"-s", certificateName, @"-p", _profileTextField.stringValue, @"-i", _bundleIDTextField.stringValue, @"-n", _appNameTextField.stringValue, @"-o",outPutPath];
+        NSLog(@"%@", args);
+        STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
+        [privilegedTask setLaunchPath:signerPath];
+        [privilegedTask setArguments:args];
+        
+        // Setting working directory is optional, defaults to /
+        NSArray * paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
+        NSString * desktopPath = [paths objectAtIndex:0];
+         [privilegedTask setCurrentDirectoryPath:desktopPath];
+        
+        // Launch it, user is prompted for password
+        OSStatus err = [privilegedTask launch];
+        if (err != errAuthorizationSuccess) {
+            if (err == errAuthorizationCanceled) {
+                NSLog(@"User cancelled");
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [_progressBarLabel setStringValue:@"Signed"];
-                    _uniButton.title = @"Extract";
-                    _ipaTextField.stringValue = outPutPath;
-                    [self updateProgressLabel:@""];
-                    [self updateProgressLabel:@"Click extract now"];
+                    [self updateProgressLabel:@"User cancelled"];
+                });
+            } else {
+                NSLog(@"Something went wrong");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self updateProgressLabel:@"Something went wrong"];
                 });
             }
-        } andErrorBlock:^(NSData *stdErrData) {
-            NSString* output = [[NSString alloc] initWithData:stdErrData encoding:NSUTF8StringEncoding];
-            NSLog(@"ERR: %@", output);
+        } else {
+            NSLog(@"Task successfully launched");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:output];
+                [self updateProgressLabel:@"Task successfully launched"];
+                [self updateProgressLabel:@""];
+                [self updateProgressLabel:@"Waiting till the sign process finishn"];
             });
-        } onLaunch:^{
-            NSLog(@"Task has started running.");
-        } onExit:^{
-            NSLog(@"Task has now quit.");
-            
-        }];
+        }
+        
+        NSFileHandle *readHandle = [privilegedTask outputFileHandle];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
+        [readHandle readInBackgroundAndNotify];
+    }
+}
+
+- (void)getOutputData:(NSNotification *)aNotification {
+    //get data from notification
+    NSData *data = [[aNotification userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    
+    //make sure there's actual data
+    if ([data length]) {
+        // do something with the data
+        NSString* output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateProgressLabel:output];
+        });
+        
+        if ([output containsString:@"17"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_progressBarLabel setStringValue:@"Signed"];
+                _uniButton.title = @"Extract";
+                _ipaTextField.stringValue = outPutPath;
+                [self updateProgressLabel:@""];
+                [self updateProgressLabel:@"Click extract now"];
+            });
+        }
+        // go read more data in the background
+        [[aNotification object] readInBackgroundAndNotify];
+    } else {
+        // do something else
     }
 }
 
@@ -268,9 +344,12 @@ static NSImage *greenImage = nil;
     if (isPathExiste) {
         for (NSString *appFile in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil]) {
             if ([appFile.lowercaseString containsString:@"app"]) {
+                
                 NSString *appPath = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile];
-                [IPAInstallerHelper copyDylibFile:_dylibTextField.stringValue toPath:appPath];
-                NSString *appBinary = [appPath stringByAppendingPathComponent:appFile.stringByDeletingPathExtension];
+                NSString *appPathEdited = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.app", _appNameTextField.stringValue]];
+                [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"mv %@ %@", appPath, appPathEdited]];
+                [IPAInstallerHelper copyDylibFile:_dylibTextField.stringValue toPath:appPathEdited];
+                NSString *appBinary = [appPathEdited stringByAppendingPathComponent:appFile.stringByDeletingPathExtension];
                 [self loadFileInBinary:appBinary];
                 NSLog(@"%@", appBinary);
             }
@@ -283,7 +362,7 @@ static NSImage *greenImage = nil;
     NSString *optoolPath = [[NSBundle mainBundle] pathForResource:@"optool" ofType:nil];
     NSString *dylibName = [_dylibTextField.stringValue lastPathComponent];
     NSString *dylibNameForOptool = [NSString stringWithFormat:@"@executable_path/%@", dylibName];
-    
+    NSLog(@"***** %@", dylibNameForOptool);
     if (dylibName.length < 1) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateProgressLabel:@""];

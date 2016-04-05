@@ -44,6 +44,7 @@
 		43ADB1001CB232D700435039 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ADB0FF1CB232D700435039 /* libz.tbd */; };
 		43ADB1021CB2347C00435039 /* optool in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1011CB2347C00435039 /* optool */; };
 		43ADB1041CB241B800435039 /* AppSignerCMD in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1031CB241B800435039 /* AppSignerCMD */; };
+		43ADB1071CB2EDA100435039 /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +119,8 @@
 		43ADB0FF1CB232D700435039 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		43ADB1011CB2347C00435039 /* optool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optool; sourceTree = "<group>"; };
 		43ADB1031CB241B800435039 /* AppSignerCMD */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = AppSignerCMD; sourceTree = "<group>"; };
+		43ADB1051CB2EDA100435039 /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
+		43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +254,8 @@
 		43ADB0FC1CB22EC100435039 /* IPAInstaller */ = {
 			isa = PBXGroup;
 			children = (
+				43ADB1051CB2EDA100435039 /* STPrivilegedTask.h */,
+				43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */,
 				43ADB1031CB241B800435039 /* AppSignerCMD */,
 				43ADB1011CB2347C00435039 /* optool */,
 				43ADB0FD1CB22EDD00435039 /* Libs */,
@@ -371,6 +376,7 @@
 				43ADB0E41CB22EB200435039 /* DragView.m in Sources */,
 				43ADB0F81CB22EB200435039 /* mztools.c in Sources */,
 				43ADB0ED1CB22EB200435039 /* aescrypt.c in Sources */,
+				43ADB1071CB2EDA100435039 /* STPrivilegedTask.m in Sources */,
 				43ADB0F41CB22EB200435039 /* pwd2key.c in Sources */,
 				43ADB0EE1CB22EB200435039 /* aeskey.c in Sources */,
 				43ADB0F21CB22EB200435039 /* hmac.c in Sources */,
