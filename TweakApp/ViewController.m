@@ -17,18 +17,21 @@
 @interface ViewController () <MobileDeviceAccessListener, SSZipArchiveDelegate, NSTableViewDelegate, NSTableViewDataSource> {
     NSArray *certsArray;
     NSString *certificateName;
+    NSString *appBinaryStatic;
+    NSString *appPathStatic;
 }
 @end
 
 static NSImage *redImage = nil;
 static NSImage *greenImage = nil;
+static BOOL isFirstExtract = YES;
 
 @implementation ViewController
 @synthesize deviceConnectedLogoView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self copyResourcesToTempPath];
     greenImage = [IPAInstallerHelper roundCornersImage:[NSImage imageNamed:@"greenImage"] CornerRadius:10];
     redImage = [IPAInstallerHelper roundCornersImage:[NSImage imageNamed:@"redImage"] CornerRadius:10];
     [deviceConnectedLogoView setImage:redImage];
@@ -42,6 +45,11 @@ static NSImage *greenImage = nil;
     }
     NSLog(@"%@", certsArray);
     [_certsTableView reloadData];
+    
+    NSData *shellContents = [NSString stringWithFormat:
+                             @"#!/bin/bash\n\n"
+                             @"CERT_NAME=\"%@\"", certificateName];
+    [IPAInstallerHelper createShellFileWithContents:nil];
 }
 
 - (void)checkLibraries {
@@ -61,7 +69,7 @@ static NSImage *greenImage = nil;
     } else if ([url.path.pathExtension isEqualToString:@"mobileprovision"]) {
         _profileTextField.stringValue = url.path;
     }
-    _uniButton.title = @"Sign";
+    _uniButton.title = @"Extract";
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -80,24 +88,148 @@ static NSImage *greenImage = nil;
         [self signAppBeforeAnyProcess];
     } else if ([sender.title isEqualToString:@"Extract"]) {
         [_progressBarLabel setStringValue:@"Extracting"];
-        NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil];
-        if (files.count > 0) {
-            if ([IPAInstallerHelper deleteFileAtPath:[IPAInstallerHelper payloadExtractedPath]]) {
-                NSLog(@"Cleaning old extraction");
+        
+        if (isFirstExtract) {
+            NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil];
+            if (files.count > 0) {
+                if ([IPAInstallerHelper deleteFileAtPath:[IPAInstallerHelper payloadExtractedPath]]) {
+                    NSLog(@"Cleaning old extraction");
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [SSZipArchive unzipFileAtPath:self.ipaTextField.stringValue toDestination:[IPAInstallerHelper ipaExtractedPath] delegate:self];
+                    });
+                    
+                }
+            } else {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
                     [SSZipArchive unzipFileAtPath:self.ipaTextField.stringValue toDestination:[IPAInstallerHelper ipaExtractedPath] delegate:self];
                 });
-                
             }
         } else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-                [SSZipArchive unzipFileAtPath:self.ipaTextField.stringValue toDestination:[IPAInstallerHelper ipaExtractedPath] delegate:self];
-            });
+            NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil];
+            if (files.count > 0) {
+                if ([IPAInstallerHelper deleteFileAtPath:[IPAInstallerHelper payloadExtractedPath]]) {
+                    NSLog(@"Cleaning old extraction");
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                        [SSZipArchive unzipFileAtPath:[NSString stringWithFormat:@"%@-signed.ipa",[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:@"AppZipped.ipa"].stringByDeletingPathExtension] toDestination:[IPAInstallerHelper ipaExtractedPath] delegate:self];
+                    });
+                    
+                }
+            } else {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+                    [SSZipArchive unzipFileAtPath:[NSString stringWithFormat:@"%@-signed.ipa",[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:@"AppZipped.ipa"].stringByDeletingPathExtension] toDestination:[IPAInstallerHelper ipaExtractedPath] delegate:self];
+                });
+            }
         }
+        
     } else if ([sender.title isEqualToString:@"Patch"]) {
-        [self applyDylibProcess];
+        [self createShellFile];
     } else if ([sender.title isEqualToString:@"Install"]) {
         [self instalApp];
+    }
+}
+
+- (void)createShellFile {
+    if (_profileTextField.stringValue.length < 1) {
+        [self updateProgressLabel:@""];
+        [self updateProgressLabel:@"You have to add provisioning profile"];
+    } else if (certificateName.length < 1) {
+        [self updateProgressLabel:@""];
+        [self updateProgressLabel:@"You have to select developer certificate"];
+    } else if (_ipaTextField.stringValue.length < 1) {
+        [self updateProgressLabel:@""];
+        [self updateProgressLabel:@"You have to select ipa file"];
+    } else if (_appNameTextField.stringValue.length < 1) {
+        [self updateProgressLabel:@""];
+        [self updateProgressLabel:@"You have to type new App Display name"];
+    } else if (_bundleIDTextField.stringValue.length < 1) {
+        [self updateProgressLabel:@""];
+        [self updateProgressLabel:@"You have to type same provisioning profile bundle ID"];
+    } else {
+        BOOL isPathExiste = [[NSFileManager defaultManager] fileExistsAtPath:[IPAInstallerHelper payloadExtractedPath]];
+        
+        if (isPathExiste) {
+            for (NSString *appFile in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil]) {
+                if ([appFile.lowercaseString containsString:@"app"]) {
+                    NSString *appPath = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile];
+                    appPathStatic = appPath;
+                    NSString *appBinary = [appPath stringByAppendingPathComponent:appFile.stringByDeletingPathExtension];
+                    appBinaryStatic = appBinary;
+                    NSString *shellContents = [NSString stringWithFormat:
+                                               
+                                               @"#!/bin/bash\n\n"
+                                               
+                                               @"cd %@\n\n"
+                                               
+                                               @"CERT_NAME=\"%@\"\n\n"
+                                               
+                                               @"ProfilePath=\"%@\"\n\n"
+                                               
+                                               @"DIRIPA=\"%@\"\n\n"
+                                               
+                                               @"DIRIPAOut=\"%@\"\n\n"
+                                               
+                                               @"BUNDLEID=\"%@\"\n\n"
+                                               
+                                               @"BUNDLENAME=\"%@\"\n\n"
+                                               
+                                               @"DYLIB=\"%@\"\n\n"
+                                               
+                                               @"APPDIR2=\"%@\"\n\n"
+                                               
+                                               @"######### Changing app values\n\n"
+                                               
+                                               @"#/usr/libexec/PlistBuddy -c \"Set :CFBundleDisplayName %@\" \"%@\""
+                                               
+                                               @"######### Signing tweaks\n\n"
+                                               
+                                               @"codesign -fs \"$CERT_NAME\" $DYLIB\n\n"
+                                               
+                                               @"echo '[+] Copying tweaks files'\n\n"
+                                               
+                                               @"cp $DYLIB $APPDIR2\n\n"
+                                               
+                                               @"echo '[+] Repacking the .ipa'\n\n"
+                                               
+                                               @"./optool uninstall -p @executable_path/%@ -t %@\n\n"
+                                               
+                                               @"./optool install -c load -p @executable_path/%@ -t %@\n\n"
+                                               
+                                               @"zip -9r \"AppZipped.ipa\" Payload/ >/dev/null 2>&1\n\n"
+                                               
+                                               @"echo \"Wrote AppZipped.ipa\"\n\n"
+                                               
+                                               @"echo \"Signing\"\n\n"
+                                               
+                                               @"./AppSignerCMD -f $DIRIPA -s \"$CERT_NAME\" -p \"$ProfilePath\" -i $BUNDLEID -n $BUNDLENAME -o $DIRIPAOut\n\n"
+                                               
+                                               ,[IPAInstallerHelper ipaExtractedPath]
+                                               ,certificateName
+                                               ,_profileTextField.stringValue
+                                               ,[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:@"AppZipped.ipa"]
+                                               ,[NSString stringWithFormat:@"%@-signed.ipa",[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:@"AppZipped.ipa"].stringByDeletingPathExtension]
+                                               ,_bundleIDTextField.stringValue
+                                               ,_appNameTextField.stringValue
+                                               ,_dylibTextField.stringValue
+                                               ,appPathStatic
+                                               ,_bundleIDTextField.stringValue
+                                               ,[appPathStatic stringByAppendingString:@"Info.plist"]
+                                               ,_dylibTextField.stringValue.lastPathComponent
+                                               ,appBinaryStatic
+                                               ,_dylibTextField.stringValue.lastPathComponent
+                                               ,appBinaryStatic
+                                               ];
+                    [IPAInstallerHelper createShellFileWithContents:shellContents];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [_progressBarLabel setStringValue:@"Patched"];
+                        _uniButton.title = @"Sign";
+                        [self updateProgressLabel:@""];
+                        [self updateProgressLabel:@"Click Sign now"];
+                    });
+                }
+                
+            }
+            
+        }
     }
 }
 
@@ -122,18 +254,23 @@ static NSImage *greenImage = nil;
     BOOL isPathExiste = [[NSFileManager defaultManager] fileExistsAtPath:[IPAInstallerHelper payloadExtractedPath]];
     
     if (isPathExiste) {
-        
         for (NSString *appFile in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil]) {
-            
             if ([appFile.lowercaseString containsString:@"app"]) {
-                
                 NSLog(@"Installing: %@", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]);
+                [self fixAppBundleNameFromAppPath:[[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]];
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self updateProgressLabel:[NSString stringWithFormat:@"Installing: %@", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]]];
                 });
+                NSString *bundleNameKey = @"CFBundleName";
+                NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:[[[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile] stringByAppendingPathComponent:@"Info.plist"]];
+                NSLog(@"**** %@", infoPlist);
+                NSString *bundleName = [infoPlist objectForKey:bundleNameKey];
+                NSLog(@"**** %@", bundleName);
+                NSString *appPathEdited = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.app", bundleName]];
                 STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
                 [privilegedTask setLaunchPath:[[NSBundle mainBundle] pathForResource:@"ideviceinstaller" ofType:nil]];
-                [privilegedTask setArguments:@[@"-i", [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile]]];
+                [privilegedTask setArguments:@[@"-i", appPathEdited]];
                 
                 // Setting working directory is optional, defaults to /
                 NSArray * paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
@@ -164,15 +301,25 @@ static NSImage *greenImage = nil;
                 NSFileHandle *readHandle = [privilegedTask outputFileHandle];
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getInstallOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
                 [readHandle readInBackgroundAndNotify];
-                
-                
-                
-
             }
         }
         
     }
     
+}
+
+- (BOOL)fixAppBundleNameFromAppPath:(NSString *)appPath {
+    
+    NSString *bundleNameKey = @"CFBundleName";
+    NSDictionary *infoPlist = [NSDictionary dictionaryWithContentsOfFile:[appPath stringByAppendingPathComponent:@"Info.plist"]];
+    NSString *bundleName = [infoPlist objectForKey:bundleNameKey];
+    NSString *appPathEdited = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.app", bundleName]];
+    
+    return [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"mv %@ %@", appPath, appPathEdited]];
+}
+
+- (BOOL)makeAppBinaryExecutable:(NSString *)appBinary {
+    return [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"chmod +x %@", appBinary]];
 }
 
 - (void)getInstallOutputData:(NSNotification *)aNotification {
@@ -228,8 +375,16 @@ static NSImage *greenImage = nil;
     }
 }
 
-static NSString *outPutPath;
+- (void)copyResourcesToTempPath {
+    NSString *signerPath = [[NSBundle mainBundle] pathForResource:@"AppSignerCMD" ofType:nil];
+    NSString *optoolPath = [[NSBundle mainBundle] pathForResource:@"optool" ofType:nil];
+    
+    [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"cp %@ %@", optoolPath, [IPAInstallerHelper ipaExtractedPath]]];
+    [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"cp %@ %@", signerPath, [IPAInstallerHelper ipaExtractedPath]]];
+}
+
 - (void)signAppBeforeAnyProcess {
+    isFirstExtract = YES;
     if (_profileTextField.stringValue.length < 1) {
         [self updateProgressLabel:@""];
         [self updateProgressLabel:@"You have to add provisioning profile"];
@@ -247,20 +402,9 @@ static NSString *outPutPath;
         [self updateProgressLabel:@"You have to type same provisioning profile bundle ID"];
     } else {
         // start sign
-        outPutPath = [_ipaTextField.stringValue stringByDeletingLastPathComponent];
-        outPutPath = [outPutPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-signed.ipa", _ipaTextField.stringValue.lastPathComponent.stringByDeletingPathExtension]];
-        NSString *signerPath = [[NSBundle mainBundle] pathForResource:@"AppSignerCMD" ofType:nil];
-        
-        NSArray *args = @[@"-f", _ipaTextField.stringValue, @"-s", certificateName, @"-p", _profileTextField.stringValue, @"-i", _bundleIDTextField.stringValue, @"-n", _appNameTextField.stringValue, @"-o",outPutPath];
-        NSLog(@"%@", args);
         STPrivilegedTask *privilegedTask = [[STPrivilegedTask alloc] init];
-        [privilegedTask setLaunchPath:signerPath];
-        [privilegedTask setArguments:args];
-        
-        // Setting working directory is optional, defaults to /
-        NSArray * paths = NSSearchPathForDirectoriesInDomains (NSDesktopDirectory, NSUserDomainMask, YES);
-        NSString * desktopPath = [paths objectAtIndex:0];
-         [privilegedTask setCurrentDirectoryPath:desktopPath];
+        [privilegedTask setLaunchPath:@"/bin/sh"];
+        [privilegedTask setArguments:@[[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:@"TweakApp.sh"]]];
         
         // Launch it, user is prompted for password
         OSStatus err = [privilegedTask launch];
@@ -280,14 +424,13 @@ static NSString *outPutPath;
             NSLog(@"Task successfully launched");
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateProgressLabel:@"Task successfully launched"];
-                [self updateProgressLabel:@""];
-                [self updateProgressLabel:@"Waiting till the sign process finishn"];
             });
         }
         
         NSFileHandle *readHandle = [privilegedTask outputFileHandle];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
         [readHandle readInBackgroundAndNotify];
+        
     }
 }
 
@@ -299,17 +442,18 @@ static NSString *outPutPath;
     if ([data length]) {
         // do something with the data
         NSString* output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"OUT: %@", output);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateProgressLabel:output];
         });
-        
         if ([output containsString:@"17"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_progressBarLabel setStringValue:@"Signed"];
                 _uniButton.title = @"Extract";
-                _ipaTextField.stringValue = outPutPath;
+                _ipaTextField.stringValue = [NSString stringWithFormat:@"%@-signed.ipa",_ipaTextField.stringValue.stringByDeletingPathExtension];
                 [self updateProgressLabel:@""];
-                [self updateProgressLabel:@"Click extract now"];
+                [self updateProgressLabel:@"Click Extract now"];
+                isFirstExtract = NO;
             });
         }
         // go read more data in the background
@@ -317,93 +461,6 @@ static NSString *outPutPath;
     } else {
         // do something else
     }
-}
-
-- (void)applyDylibProcess {
-    
-    if (_dylibTextField.stringValue) {
-        GCDTask* pingTask = [[GCDTask alloc] init];
-        [pingTask setArguments:@[@"-fs", certificateName, _dylibTextField.stringValue]];
-        [pingTask setLaunchPath:@"/usr/bin/codesign"];
-        [pingTask launchWithOutputBlock:^(NSData *stdOutData) {
-            NSString* output = [[NSString alloc] initWithData:stdOutData encoding:NSUTF8StringEncoding];
-            NSLog(@"OUT: %@", output);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:output];
-            });
-        } andErrorBlock:^(NSData *stdErrData) {
-            NSString* output = [[NSString alloc] initWithData:stdErrData encoding:NSUTF8StringEncoding];
-            NSLog(@"ERR: %@", output);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:output];
-            });
-        } onLaunch:^{
-            NSLog(@"Task has started running.");
-        } onExit:^{
-            NSLog(@"Task has now quit.");
-        }];
-    }
-    BOOL isPathExiste = [[NSFileManager defaultManager] fileExistsAtPath:[IPAInstallerHelper payloadExtractedPath]];
-    if (isPathExiste) {
-        for (NSString *appFile in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil]) {
-            if ([appFile.lowercaseString containsString:@"app"]) {
-                
-                NSString *appPath = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:appFile];
-                NSString *appPathEdited = [[IPAInstallerHelper payloadExtractedPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.app", _appNameTextField.stringValue]];
-                [IPAInstallerHelper ApplyCommandWithRoot:[NSString stringWithFormat:@"mv %@ %@", appPath, appPathEdited]];
-                [IPAInstallerHelper copyDylibFile:_dylibTextField.stringValue toPath:appPathEdited];
-                NSString *appBinary = [appPathEdited stringByAppendingPathComponent:appFile.stringByDeletingPathExtension];
-                [self loadFileInBinary:appBinary];
-                NSLog(@"%@", appBinary);
-            }
-        }
-    }
-}
-
-- (void)loadFileInBinary:(NSString *)binaryPath {
-    
-    NSString *optoolPath = [[NSBundle mainBundle] pathForResource:@"optool" ofType:nil];
-    NSString *dylibName = [_dylibTextField.stringValue lastPathComponent];
-    NSString *dylibNameForOptool = [NSString stringWithFormat:@"@executable_path/%@", dylibName];
-    NSLog(@"***** %@", dylibNameForOptool);
-    if (dylibName.length < 1) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateProgressLabel:@""];
-            [self updateProgressLabel:@"You have to add dylib file"];
-        });
-        
-    } else {
-        GCDTask* pingTask = [[GCDTask alloc] init];
-        [pingTask setLaunchPath:optoolPath];
-        [pingTask setArguments:@[@"install", @"-c", @"load", @"-p", dylibNameForOptool, @"-t", binaryPath]];
-        [pingTask launchWithOutputBlock:^(NSData *stdOutData) {
-            NSString* output = [[NSString alloc] initWithData:stdOutData encoding:NSUTF8StringEncoding];
-            // Writing executable
-            NSLog(@"OUT: %@", output);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:output];
-            });
-            if ([output containsString:@"executable"]) {
-                NSLog(@"YES");
-            }
-        } andErrorBlock:^(NSData *stdErrData) {
-            //
-            if (stdErrData != nil) {
-                NSLog(@"NO");
-            }
-            
-        } onLaunch:^{
-
-        } onExit:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_progressBarLabel setStringValue:@"Patched"];
-                [_uniButton setTitle:@"Install"];
-                [self updateProgressLabel:@""];
-                [self updateProgressLabel:@"Click Install now"];
-            });
-        }];
-    }
-    
 }
 
 - (void)resetAllContents {
@@ -444,12 +501,23 @@ static NSString *outPutPath;
         if (progress < 100) {
             [self updateProgress:progress];
         } else if (progress == 100) {
-            [self updateProgress:100];
-            [self updateProgressLabel:@"unzipped DONE"];
-            [_progressBarLabel setStringValue:@"Extracted"];
-            [_uniButton setTitle:@"Patch"];
-            [self updateProgressLabel:@""];
-            [self updateProgressLabel:@"Click Patch now"];
+            if (isFirstExtract) {
+                [self makeAppBinaryExecutable:[appPathStatic stringByAppendingPathComponent:[NSString stringWithFormat:@"lib%@", _dylibTextField.stringValue.lastPathComponent]]];
+                [self makeAppBinaryExecutable:appBinaryStatic];
+                [self updateProgress:100];
+                [self updateProgressLabel:@"unzipped DONE"];
+                [_progressBarLabel setStringValue:@"Extracted"];
+                [_uniButton setTitle:@"Patch"];
+                [self updateProgressLabel:@""];
+                [self updateProgressLabel:@"Click Patch now"];
+            } else {
+                [self updateProgress:100];
+                [self updateProgressLabel:@"unzipped DONE"];
+                [_progressBarLabel setStringValue:@"Extracted"];
+                [_uniButton setTitle:@"Install"];
+                [self updateProgressLabel:@""];
+                [self updateProgressLabel:@"Click Install now"];
+            }
         }
         
     });

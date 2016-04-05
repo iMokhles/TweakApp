@@ -148,4 +148,20 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
     return ([appleScript executeAndReturnError:nil] != nil);
 }
 
++ (BOOL)excuteSignCommandWithFilePath:(NSString *)ipaPath certName:(NSString *)certName profilePath:(NSString *)profilePath newBID:(NSString *)bundleID appName:(NSString *)appName {
+    
+    NSString *script =  [NSString stringWithFormat:@"do shell script \"cd %@; ./AppSignerCMD -f %@ -s \"%@\" -p \"%@\" -i %@ -n %@ -o %@\" with administrator privileges", [self ipaExtractedPath], ipaPath, certName, profilePath, bundleID, appName, [NSString stringWithFormat:@"%@-signed.ipa", ipaPath.stringByDeletingPathExtension]];
+    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+    return ([appleScript executeAndReturnError:nil] != nil);
+}
+
++ (void)createShellFileWithContents:(NSString *)contents {
+    
+//    [self ApplyCommandWithRoot:[NSString stringWithFormat:@"%@ >> %@", contents, [[self ipaExtractedPath] stringByAppendingPathComponent:@"TweakApp.sh"]]];
+    
+    [[NSFileManager defaultManager] createFileAtPath:[[self ipaExtractedPath] stringByAppendingPathComponent:@"TweakApp.sh"] contents:nil attributes:nil];
+    [contents writeToFile:[[self ipaExtractedPath] stringByAppendingPathComponent:@"TweakApp.sh"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+
+    
+}
 @end
