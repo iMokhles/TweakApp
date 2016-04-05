@@ -118,7 +118,7 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
     [getCerTask setStandardOutput:pie];
     [getCerTask setStandardError:pie];
     [getCerTask launch];
-    [getCerTask waitUntilExit];
+    //[getCerTask waitUntilExit];
     
     NSFileHandle *fileHandle = [pie fileHandleForReading];
     NSString *securityResult = [[NSString alloc] initWithData:[fileHandle readDataToEndOfFile] encoding:NSASCIIStringEncoding];

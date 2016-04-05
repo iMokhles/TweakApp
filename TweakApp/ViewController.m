@@ -37,6 +37,9 @@ static NSImage *greenImage = nil;
     [self checkLibraries];
     
     certsArray = [IPAInstallerHelper getCertifications];
+    if (certsArray.count < 1) {
+        [self updateProgressLabel:@"You don't have any developer certificate installed"];
+    }
     NSLog(@"%@", certsArray);
     [_certsTableView reloadData];
 }
