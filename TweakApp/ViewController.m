@@ -83,8 +83,6 @@ static BOOL isFirstExtract = YES;
         [self signAppBeforeAnyProcess];
     } else if ([sender.title isEqualToString:@"Extract"]) {
         [_progressBarLabel setStringValue:@"Extracting"];
-        [self copyResourcesToTempPath];
-        [self copyOptool];
         if (isFirstExtract) {
             NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[IPAInstallerHelper payloadExtractedPath] error:nil];
             if (files.count > 0) {
@@ -195,6 +193,8 @@ static BOOL isFirstExtract = YES;
                                                @"echo \"Wrote AppZipped.ipa\"\n\n"
                                                
                                                @"echo \"Signing\"\n\n"
+                                               
+                                               @"echo \"Wait till it finish......\"\n\n"
                                                
                                                @"./AppSignerCMD -f $DIRIPA -s \"$CERT_NAME\" -p \"$ProfilePath\" -i $BUNDLEID -n $BUNDLENAME -o $DIRIPAOut\n\n"
                                                
@@ -384,66 +384,6 @@ static BOOL isFirstExtract = YES;
     }
 }
 
-- (void)copyResourcesToTempPath {
-    NSString *signerPath = [[NSBundle mainBundle] pathForResource:@"AppSignerCMD" ofType:nil];
-    STPrivilegedTask *privilegedTask = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:@"/bin/sh" arguments:@[@"-c", [NSString stringWithFormat:@"cp -a %@ %@", signerPath, [IPAInstallerHelper ipaExtractedPath]]]];
-    
-    // Launch it, user is prompted for password
-    OSStatus err = [privilegedTask launch];
-    if (err != errAuthorizationSuccess) {
-        if (err == errAuthorizationCanceled) {
-            NSLog(@"User cancelled");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:@"User cancelled"];
-            });
-        } else {
-            NSLog(@"Something went wrong");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:@"Something went wrong"];
-            });
-        }
-    } else {
-        NSLog(@"Task successfully launched");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateProgressLabel:@"Task successfully launched"];
-        });
-    }
-    
-    NSFileHandle *readHandle = [privilegedTask outputFileHandle];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
-    [readHandle readInBackgroundAndNotify];
-
-}
-
-- (void)copyOptool {
-    NSString *optoolPath = [[NSBundle mainBundle] pathForResource:@"optool" ofType:nil];
-    STPrivilegedTask *privilegedTask = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:@"/bin/sh" arguments:@[@"-c", [NSString stringWithFormat:@"cp -a %@ %@", optoolPath, [IPAInstallerHelper ipaExtractedPath]]]];
-    
-    // Launch it, user is prompted for password
-    OSStatus err = [privilegedTask launch];
-    if (err != errAuthorizationSuccess) {
-        if (err == errAuthorizationCanceled) {
-            NSLog(@"User cancelled");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:@"User cancelled"];
-            });
-        } else {
-            NSLog(@"Something went wrong");
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self updateProgressLabel:@"Something went wrong"];
-            });
-        }
-    } else {
-        NSLog(@"Task successfully launched");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateProgressLabel:@"Task successfully launched"];
-        });
-    }
-    
-    NSFileHandle *readHandle = [privilegedTask outputFileHandle];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getOutputData:) name:NSFileHandleReadCompletionNotification object:readHandle];
-    [readHandle readInBackgroundAndNotify];
-}
 - (void)signAppBeforeAnyProcess {
     isFirstExtract = YES;
     if (_profileTextField.stringValue.length < 1) {

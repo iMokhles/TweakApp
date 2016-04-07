@@ -7,6 +7,7 @@
 //
 
 #import "IPAInstallerHelper.h"
+#import "DJProgressHUD.h"
 
 void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, float ovalHeight)
 {
@@ -29,6 +30,8 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
     CGContextRestoreGState(context);
 }
 
+#define kLibDestinationPath @"/usr/local/lib/"
+#define kLibSourcePath @"CMDS"
 @implementation IPAInstallerHelper
 
 + (void)ensurePathAt:(NSString *)path
@@ -61,7 +64,9 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
 }
 
 + (NSString *)tempPath {
-    return NSTemporaryDirectory();
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    return documentsDirectory;
 }
 
 + (NSString *)ipainstallerSubPath {
@@ -163,5 +168,67 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
     [contents writeToFile:[[self ipaExtractedPath] stringByAppendingPathComponent:@"TweakApp.sh"] atomically:YES encoding:NSUTF8StringEncoding error:nil];
 
     
+}
+
++ (NSString *)librariesPath {
+    return [[NSBundle mainBundle] pathForResource:kLibSourcePath ofType:nil];
+}
+
++ (BOOL)installLibrariesFromPath:(NSString *)path {
+    
+    [DJProgressHUD showStatus:@"Installing CMDS" FromView:[[NSApplication sharedApplication] keyWindow].contentView];
+    
+//    path = [path stringByAppendingPathComponent:@"."];
+//    NSString *command = [NSString stringWithFormat:@"cp %@ %@", path , [IPAInstallerHelper ipaExtractedPath]];
+//    NSString *script =  [NSString stringWithFormat:@"do shell script \"%@\" with administrator privileges", command];
+//    NSAppleScript *appleScript = [[NSAppleScript new] initWithSource:script];
+//    return ([appleScript executeAndReturnError:nil] != nil);
+    NSError *error = nil;
+    NSError *error2 = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&error2];
+        NSLog(@"ERROR2: %@", error2.localizedDescription);
+    }
+    BOOL isMoved = [[NSFileManager defaultManager] moveItemAtPath:path toPath:[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:path] error:&error];
+    NSLog(@"******** ERROR: %@", error.localizedDescription);
+    return isMoved;
+}
+
++ (BOOL)isLibraryInstalled {
+    
+    NSString *librariesPath = [IPAInstallerHelper librariesPath];
+    NSArray *libraries;
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    if ([fm fileExistsAtPath:librariesPath]) {
+        libraries = [fm contentsOfDirectoryAtPath:librariesPath error:nil];
+    }
+    
+    BOOL installed = NO;
+    
+    for (NSString *library in libraries) {
+        NSLog(@"%@", libraries);
+        NSLog(@"%@", library);
+        installed = [[NSFileManager defaultManager] fileExistsAtPath:[[IPAInstallerHelper ipaExtractedPath] stringByAppendingPathComponent:library]];
+        if (!installed) {
+            [DJProgressHUD dismiss];
+            break;
+        } else {
+            [DJProgressHUD dismiss];
+        }
+    }
+    
+    return installed;
+}
+
++ (BOOL)installLibraries {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:kLibSourcePath ofType:@""];
+    if ([IPAInstallerHelper installLibrariesFromPath:path]) {
+        [DJProgressHUD dismiss];
+    } else {
+        NSLog(@"Error");
+    }
+    return [IPAInstallerHelper isLibraryInstalled];
 }
 @end

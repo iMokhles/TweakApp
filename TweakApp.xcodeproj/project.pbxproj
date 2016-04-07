@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		431342F21CB5C68E00DC422C /* CMDS in Resources */ = {isa = PBXBuildFile; fileRef = 431342F11CB5C68E00DC422C /* CMDS */; };
 		43ADB0901CB22E2F00435039 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB08F1CB22E2F00435039 /* AppDelegate.m */; };
 		43ADB0931CB22E2F00435039 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0921CB22E2F00435039 /* main.m */; };
 		43ADB0961CB22E2F00435039 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0951CB22E2F00435039 /* ViewController.m */; };
@@ -42,12 +43,11 @@
 		43ADB0FB1CB22EB200435039 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB0DE1CB22EB200435039 /* SSZipArchive.m */; };
 		43ADB0FE1CB22EDD00435039 /* Libs in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB0FD1CB22EDD00435039 /* Libs */; };
 		43ADB1001CB232D700435039 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 43ADB0FF1CB232D700435039 /* libz.tbd */; };
-		43ADB1021CB2347C00435039 /* optool in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1011CB2347C00435039 /* optool */; };
-		43ADB1041CB241B800435039 /* AppSignerCMD in Resources */ = {isa = PBXBuildFile; fileRef = 43ADB1031CB241B800435039 /* AppSignerCMD */; };
 		43ADB1071CB2EDA100435039 /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		431342F11CB5C68E00DC422C /* CMDS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CMDS; sourceTree = "<group>"; };
 		43ADB08B1CB22E2F00435039 /* TweakApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TweakApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43ADB08E1CB22E2F00435039 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		43ADB08F1CB22E2F00435039 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -117,8 +117,6 @@
 		43ADB0DF1CB22EB200435039 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		43ADB0FD1CB22EDD00435039 /* Libs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Libs; sourceTree = "<group>"; };
 		43ADB0FF1CB232D700435039 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		43ADB1011CB2347C00435039 /* optool */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optool; sourceTree = "<group>"; };
-		43ADB1031CB241B800435039 /* AppSignerCMD */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = AppSignerCMD; sourceTree = "<group>"; };
 		43ADB1051CB2EDA100435039 /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
 		43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,10 +252,9 @@
 		43ADB0FC1CB22EC100435039 /* IPAInstaller */ = {
 			isa = PBXGroup;
 			children = (
+				431342F11CB5C68E00DC422C /* CMDS */,
 				43ADB1051CB2EDA100435039 /* STPrivilegedTask.h */,
 				43ADB1061CB2EDA100435039 /* STPrivilegedTask.m */,
-				43ADB1031CB241B800435039 /* AppSignerCMD */,
-				43ADB1011CB2347C00435039 /* optool */,
 				43ADB0FD1CB22EDD00435039 /* Libs */,
 				43ADB0A21CB22EB200435039 /* DJProgressHUD */,
 				43ADB0AB1CB22EB200435039 /* DragView.h */,
@@ -337,11 +334,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43ADB1041CB241B800435039 /* AppSignerCMD in Resources */,
 				43ADB0981CB22E2F00435039 /* Assets.xcassets in Resources */,
 				43ADB0EC1CB22EB200435039 /* redImage.png in Resources */,
 				43ADB0FE1CB22EDD00435039 /* Libs in Resources */,
-				43ADB1021CB2347C00435039 /* optool in Resources */,
+				431342F21CB5C68E00DC422C /* CMDS in Resources */,
 				43ADB0F61CB22EB200435039 /* Info.plist in Resources */,
 				43ADB0E61CB22EB200435039 /* greenImage.png in Resources */,
 				43ADB09B1CB22E2F00435039 /* Main.storyboard in Resources */,

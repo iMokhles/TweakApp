@@ -25,4 +25,6 @@ void addRoundedRectToPath(CGContextRef context, CGRect rect, float ovalWidth, fl
 + (BOOL)ApplyCommandWithRoot:(NSString *)commandString;
 + (BOOL)excuteSignCommandWithFilePath:(NSString *)ipaPath certName:(NSString *)certName profilePath:(NSString *)profilePath newBID:(NSString *)bundleID appName:(NSString *)appName;
 + (void)createShellFileWithContents:(NSString *)contents;
++ (BOOL)isLibraryInstalled;
++ (BOOL)installLibraries;
 @end
